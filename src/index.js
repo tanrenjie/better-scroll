@@ -10,11 +10,11 @@ import {pullUpMixin} from './scroll/pullup'
 import {warn} from './util/debug'
 
 function BScroll(el, options) {
-  this.wrapper = typeof el === 'string' ? document.querySelector(el) : el
+  this.wrapper = typeof el === 'string' ? document.querySelector(el) : el       // 滚动元素的父节点
   if (!this.wrapper) {
     warn('can not resolve the wrapper dom')
   }
-  this.scroller = this.wrapper.children[0]
+  this.scroller = this.wrapper.children[0]                                      // 滚动元素
   if (!this.scroller) {
     warn('the wrapper need at least one child element to be scroller')
   }

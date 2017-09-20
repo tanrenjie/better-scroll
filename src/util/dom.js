@@ -1,6 +1,6 @@
 let elementStyle = document.createElement('div').style
 
-let vendor = (() => {
+let vendor = (() => {                       // 判断浏览器前缀
   let transformNames = {
     webkit: 'webkitTransform',
     Moz: 'MozTransform',
@@ -18,7 +18,7 @@ let vendor = (() => {
   return false
 })()
 
-function prefixStyle(style) {
+function prefixStyle(style) {                // 添加浏览器前缀
   if (vendor === false) {
     return false
   }
@@ -30,7 +30,7 @@ function prefixStyle(style) {
   return vendor + style.charAt(0).toUpperCase() + style.substr(1)
 }
 
-export function addEvent(el, type, fn, capture) {
+export function addEvent(el, type, fn, capture) {         // passive: false,告诉浏览器需要 preventDefault()
   el.addEventListener(type, fn, {passive: false, capture: !!capture})
 }
 
@@ -38,7 +38,7 @@ export function removeEvent(el, type, fn, capture) {
   el.removeEventListener(type, fn, {passive: false, capture: !!capture})
 }
 
-export function offset(el) {
+export function offset(el) {                            // 递归父节点，返回距离浏览器左上角的偏移量
   let left = 0
   let top = 0
 
@@ -56,7 +56,7 @@ export function offset(el) {
 
 let transform = prefixStyle('transform')
 
-export const hasPerspective = prefixStyle('perspective') in elementStyle
+export const hasPerspective = prefixStyle('perspective') in elementStyle        // 是否支持css3 3d特性
 export const hasTouch = 'ontouchstart' in window
 export const hasTransform = transform !== false
 export const hasTransition = prefixStyle('transition') in elementStyle
@@ -119,7 +119,7 @@ export function tap(e, eventName) {
   e.target.dispatchEvent(ev)
 }
 
-export function click(e) {
+export function click(e) {                        // 派发自定义 click 事件，设置私有属性 _constructed 区分原生 click 事件
   var target = e.target
 
   if (!(/(SELECT|INPUT|TEXTAREA)/i).test(target.tagName)) {

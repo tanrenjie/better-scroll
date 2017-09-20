@@ -458,19 +458,18 @@ export function coreMixin(BScroll) {
     this.scrollTo(x, y, time, easing)
   }
 
-  BScroll.prototype.scrollTo = function (x, y, time = 0, easing = ease.bounce) {
-    this.isInTransition = this.options.useTransition && time > 0 && (x !== this.x || y !== this.y)
+  BScroll.prototype.scrollTo = function (x, y, time = 0, easing = ease.bounce) {          // 滚动到指定的位置
+    this.isInTransition = this.options.useTransition && time > 0 && (x !== this.x || y !== this.y)  // 根据 time 时长，且位置相同，定义过渡开始
 
-    if (!time || this.options.useTransition) {
+    if (!time || this.options.useTransition) {          // 当用 transition 控制动画时
       this._transitionTimingFunction(easing.style)
       this._transitionTime(time)
       this._translate(x, y)
-
-      if (time && this.options.probeType === 3) {
+      if (time && this.options.probeType === 3) {       // 启动 scroll 事件监听
         this._startProbe()
       }
 
-      if (this.options.wheel) {
+      if (this.options.wheel) {                         // 根据传入 y 值更新索引
         if (y > 0) {
           this.selectedIndex = 0
         } else if (y < this.maxScrollY) {
@@ -479,12 +478,12 @@ export function coreMixin(BScroll) {
           this.selectedIndex = Math.abs(y / this.itemHeight) | 0
         }
       }
-    } else {
+    } else {                                           // 当用 js 控制动画时
       this._animate(x, y, time, easing.fn)
     }
   }
 
-  BScroll.prototype.scrollToElement = function (el, time, offsetX, offsetY, easing) {
+  BScroll.prototype.scrollToElement = function (el, time, offsetX, offsetY, easing) {      // 滚动到指定的目标元素
     if (!el) {
       return
     }
